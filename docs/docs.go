@@ -25,7 +25,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/subtodo": {
+        "/create/subtodo": {
             "post": {
                 "description": "Create a new subtodo item",
                 "consumes": [
@@ -46,6 +46,58 @@ const docTemplate = `{
                         "in": "formData",
                         "required": true
                     },
+                    {
+                        "type": "string",
+                        "description": "Title",
+                        "name": "title",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Description",
+                        "name": "description",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "format": "mime",
+                        "description": "File",
+                        "name": "file",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.SuccessResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/create/todo": {
+            "post": {
+                "description": "Create a new todo item",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "todo"
+                ],
+                "summary": "Create a todo",
+                "parameters": [
                     {
                         "type": "string",
                         "description": "Title",
@@ -156,70 +208,6 @@ const docTemplate = `{
                         }
                     }
                 }
-            },
-            "patch": {
-                "description": "Update a subtodo",
-                "consumes": [
-                    "multipart/form-data"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "subtodo"
-                ],
-                "summary": "Update a subtodo",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Title",
-                        "name": "title",
-                        "in": "formData",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Description",
-                        "name": "description",
-                        "in": "formData",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Todo Id",
-                        "name": "todo_id",
-                        "in": "formData",
-                        "required": true
-                    },
-                    {
-                        "type": "file",
-                        "format": "mime",
-                        "description": "File",
-                        "name": "file",
-                        "in": "formData"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dto.SuccessResult"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/dto.ErrorResult"
-                        }
-                    }
-                }
             }
         },
         "/subtodos": {
@@ -259,58 +247,6 @@ const docTemplate = `{
                         "description": "Search query by description",
                         "name": "search_description",
                         "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dto.SuccessResult"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/dto.ErrorResult"
-                        }
-                    }
-                }
-            }
-        },
-        "/todo": {
-            "post": {
-                "description": "Create a new todo item",
-                "consumes": [
-                    "multipart/form-data"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "todo"
-                ],
-                "summary": "Create a todo",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Title",
-                        "name": "title",
-                        "in": "formData",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Description",
-                        "name": "description",
-                        "in": "formData",
-                        "required": true
-                    },
-                    {
-                        "type": "file",
-                        "format": "mime",
-                        "description": "File",
-                        "name": "file",
-                        "in": "formData"
                     }
                 ],
                 "responses": {
@@ -401,7 +337,130 @@ const docTemplate = `{
                         }
                     }
                 }
-            },
+            }
+        },
+        "/todos": {
+            "get": {
+                "description": "Get all todo",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "todo"
+                ],
+                "summary": "Get all todo",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Search query by pagination",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Search query by pagination",
+                        "name": "per_page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Search query by title",
+                        "name": "search_title",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Search query by description",
+                        "name": "search_description",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.SuccessResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/update/subtodo/{id}": {
+            "patch": {
+                "description": "Update a subtodo",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtodo"
+                ],
+                "summary": "Update a subtodo",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Title",
+                        "name": "title",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Description",
+                        "name": "description",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Todo Id",
+                        "name": "todo_id",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "format": "mime",
+                        "description": "File",
+                        "name": "file",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.SuccessResult"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/update/todo/{id}": {
             "patch": {
                 "description": "Update a todo",
                 "consumes": [
@@ -442,61 +501,6 @@ const docTemplate = `{
                         "description": "File",
                         "name": "file",
                         "in": "formData"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dto.SuccessResult"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/dto.ErrorResult"
-                        }
-                    }
-                }
-            }
-        },
-        "/todos": {
-            "get": {
-                "description": "Get all todo",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "todo"
-                ],
-                "summary": "Get all todo",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Search query by pagination",
-                        "name": "page",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Search query by pagination",
-                        "name": "per_page",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Search query by title",
-                        "name": "search_title",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Search query by description",
-                        "name": "search_description",
-                        "in": "query"
                     }
                 ],
                 "responses": {

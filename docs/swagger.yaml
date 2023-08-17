@@ -30,7 +30,7 @@ info:
   title: Swagger Example API
   version: "1.0"
 paths:
-  /subtodo:
+  /create/subtodo:
     post:
       consumes:
       - multipart/form-data
@@ -70,6 +70,41 @@ paths:
       summary: Create a subtodo
       tags:
       - subtodo
+  /create/todo:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Create a new todo item
+      parameters:
+      - description: Title
+        in: formData
+        name: title
+        required: true
+        type: string
+      - description: Description
+        in: formData
+        name: description
+        required: true
+        type: string
+      - description: File
+        format: mime
+        in: formData
+        name: file
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.SuccessResult'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResult'
+      summary: Create a todo
+      tags:
+      - todo
   /subtodo/{id}:
     delete:
       consumes:
@@ -119,50 +154,6 @@ paths:
       summary: Get a subtodo by id
       tags:
       - subtodo
-    patch:
-      consumes:
-      - multipart/form-data
-      description: Update a subtodo
-      parameters:
-      - description: Id
-        in: path
-        name: id
-        required: true
-        type: integer
-      - description: Title
-        in: formData
-        name: title
-        required: true
-        type: string
-      - description: Description
-        in: formData
-        name: description
-        required: true
-        type: string
-      - description: Todo Id
-        in: formData
-        name: todo_id
-        required: true
-        type: integer
-      - description: File
-        format: mime
-        in: formData
-        name: file
-        type: file
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/dto.SuccessResult'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/dto.ErrorResult'
-      summary: Update a subtodo
-      tags:
-      - subtodo
   /subtodos:
     get:
       consumes:
@@ -199,41 +190,6 @@ paths:
       summary: Get all subtodo
       tags:
       - subtodo
-  /todo:
-    post:
-      consumes:
-      - multipart/form-data
-      description: Create a new todo item
-      parameters:
-      - description: Title
-        in: formData
-        name: title
-        required: true
-        type: string
-      - description: Description
-        in: formData
-        name: description
-        required: true
-        type: string
-      - description: File
-        format: mime
-        in: formData
-        name: file
-        type: file
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/dto.SuccessResult'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/dto.ErrorResult'
-      summary: Create a todo
-      tags:
-      - todo
   /todo/{id}:
     delete:
       consumes:
@@ -283,6 +239,88 @@ paths:
       summary: Get a todo by id
       tags:
       - todo
+  /todos:
+    get:
+      consumes:
+      - application/json
+      description: Get all todo
+      parameters:
+      - description: Search query by pagination
+        in: query
+        name: page
+        type: integer
+      - description: Search query by pagination
+        in: query
+        name: per_page
+        type: integer
+      - description: Search query by title
+        in: query
+        name: search_title
+        type: string
+      - description: Search query by description
+        in: query
+        name: search_description
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.SuccessResult'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResult'
+      summary: Get all todo
+      tags:
+      - todo
+  /update/subtodo/{id}:
+    patch:
+      consumes:
+      - multipart/form-data
+      description: Update a subtodo
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Title
+        in: formData
+        name: title
+        required: true
+        type: string
+      - description: Description
+        in: formData
+        name: description
+        required: true
+        type: string
+      - description: Todo Id
+        in: formData
+        name: todo_id
+        required: true
+        type: integer
+      - description: File
+        format: mime
+        in: formData
+        name: file
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.SuccessResult'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResult'
+      summary: Update a subtodo
+      tags:
+      - subtodo
+  /update/todo/{id}:
     patch:
       consumes:
       - multipart/form-data
@@ -320,42 +358,6 @@ paths:
           schema:
             $ref: '#/definitions/dto.ErrorResult'
       summary: Update a todo
-      tags:
-      - todo
-  /todos:
-    get:
-      consumes:
-      - application/json
-      description: Get all todo
-      parameters:
-      - description: Search query by pagination
-        in: query
-        name: page
-        type: integer
-      - description: Search query by pagination
-        in: query
-        name: per_page
-        type: integer
-      - description: Search query by title
-        in: query
-        name: search_title
-        type: string
-      - description: Search query by description
-        in: query
-        name: search_description
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/dto.SuccessResult'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/dto.ErrorResult'
-      summary: Get all todo
       tags:
       - todo
 swagger: "2.0"
