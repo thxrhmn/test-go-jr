@@ -32,7 +32,7 @@ func HandlerSubTodo(SubTodoRepository repositories.SubTodoRepository) *handlerSu
 // @Produce json
 // @Success 200 {object} dto.SuccessResult
 // @Failure 500 {object} dto.ErrorResult
-// @Router /subtodo [post]
+// @Router /create/subtodo [post]
 func (h *handlerSubTodo) CreateSubTodo(c echo.Context) error {
 	dataFile := c.Get("dataFile").(string)
 	todoId, _ := strconv.Atoi(c.FormValue("todo_id"))
@@ -140,7 +140,7 @@ func (h *handlerSubTodo) GetSubTodos(c echo.Context) error {
 // @Produce json
 // @Success 200 {object} dto.SuccessResult
 // @Failure 500 {object} dto.ErrorResult
-// @Router /subtodo/{id} [patch]
+// @Router /update/subtodo/{id} [patch]
 func (h *handlerSubTodo) UpdateSubTodo(c echo.Context) error {
 	dataFile := c.Get("dataFile").(string)
 	subTodoId, _ := strconv.Atoi(c.Param("id"))

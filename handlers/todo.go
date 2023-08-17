@@ -31,7 +31,7 @@ func HandlerTodo(TodoRepository repositories.TodoRepository) *handlerTodo {
 // @Produce json
 // @Success 200 {object} dto.SuccessResult
 // @Failure 500 {object} dto.ErrorResult
-// @Router /todo [post]
+// @Router /create/todo [post]
 func (h *handlerTodo) CreateTodo(c echo.Context) error {
 	dataFile := c.Get("dataFile").(string)
 
@@ -135,7 +135,7 @@ func (h *handlerTodo) GetTodos(c echo.Context) error {
 // @Produce json
 // @Success 200 {object} dto.SuccessResult
 // @Failure 500 {object} dto.ErrorResult
-// @Router /todo/{id} [patch]
+// @Router /update/todo/{id} [patch]
 func (h *handlerTodo) UpdateTodo(c echo.Context) error {
 	dataFile := c.Get("dataFile").(string)
 	id, _ := strconv.Atoi(c.Param("id"))
