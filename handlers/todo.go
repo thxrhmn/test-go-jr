@@ -86,7 +86,9 @@ func (h *handlerTodo) GetTodo(c echo.Context) error {
 // @Summary Get all todo
 // @Description Get all todo
 // @Tags todo
-// @Param search_query query string false "Search query by title"
+// @Param page query int false "Search query by pagination"
+// @Param per_page query int false "Search query by pagination"
+// @Param search_title query string false "Search query by title"
 // @Param search_description query string false "Search query by description"
 // @Accept json
 // @Produce json
@@ -94,18 +96,20 @@ func (h *handlerTodo) GetTodo(c echo.Context) error {
 // @Failure 500 {object} dto.ErrorResult
 // @Router /todos [get]
 func (h *handlerTodo) GetTodos(c echo.Context) error {
+	page, _ := strconv.Atoi(c.QueryParam("page"))
+	perPage, _ := strconv.Atoi(c.QueryParam("per_page"))
 	searchTitle := c.QueryParam("search_title")
 	searchDescription := c.QueryParam("search_description")
 
 	var todos []models.Todo
 	var err error
 
-	if searchTitle != "" {
+	if page != 0 && perPage != 0 {
+		todos, err = h.TodoRepository.GetTodosByPagination(page, perPage) 
+	} else if searchTitle != "" {
 		todos, err = h.TodoRepository.GetTodosByTitle(searchTitle)
 	} else if searchDescription != "" {
 		todos, err = h.TodoRepository.GetTodosByDescription(searchDescription)
-	} else if searchTitle != "" && searchDescription != "" {
-		todos, err = h.TodoRepository.GetTodosByTitleAndDescription(searchTitle, searchDescription)
 	} else {
 		todos, err = h.TodoRepository.GetTodos()
 	}

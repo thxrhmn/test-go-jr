@@ -10,9 +10,9 @@ type TodoRepository interface {
 	CreateTodo(todo models.Todo) (models.Todo, error)
 	GetTodo(ID int) (models.Todo, error)
 	GetTodos() ([]models.Todo, error)
+	GetTodosByPagination(page, perPage int) ([]models.Todo, error)
 	GetTodosByTitle(title string) ([]models.Todo, error)
 	GetTodosByDescription(description string) ([]models.Todo, error)
-	GetTodosByTitleAndDescription(title, description string) ([]models.Todo, error)
 	UpdateTodo(todo models.Todo) (models.Todo, error)
 	DeleteTodo(todo models.Todo, ID int) (models.Todo, error)
 }
@@ -41,6 +41,13 @@ func (r *repository) GetTodos() ([]models.Todo, error) {
 	return todos, err
 }
 
+func (r *repository) GetTodosByPagination(page, perPage int) ([]models.Todo, error) {
+	var todos []models.Todo
+	err := r.db.Offset((page - 1) * perPage).Limit(perPage).Find(&todos).Error
+
+	return todos, err
+}
+
 func (r *repository) GetTodosByTitle(title string) ([]models.Todo, error) {
 	var todos []models.Todo
 	err := r.db.Preload("SubTodos").Where("title ILIKE ?", "%"+title+"%").Find(&todos).Error
@@ -51,13 +58,6 @@ func (r *repository) GetTodosByTitle(title string) ([]models.Todo, error) {
 func (r *repository) GetTodosByDescription(description string) ([]models.Todo, error) {
 	var todos []models.Todo
 	err := r.db.Preload("SubTodos").Where("description ILIKE ?", "%"+description+"%").Find(&todos).Error
-
-	return todos, err
-}
-
-func (r *repository) GetTodosByTitleAndDescription(title, description string) ([]models.Todo, error) {
-	var todos []models.Todo
-	err := r.db.Preload("SubTodos").Where("title ILIKE ? OR description ILIKE ?", "%"+title+"%", "%"+description+"%").Find(&todos).Error
 
 	return todos, err
 }

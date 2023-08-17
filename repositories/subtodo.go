@@ -10,9 +10,9 @@ type SubTodoRepository interface {
 	CreateSubTodo(subtodo models.SubTodo) (models.SubTodo, error)
 	GetSubTodo(ID int) (models.SubTodo, error)
 	GetSubTodos() ([]models.SubTodo, error)
+	GetSubTodosByPagination(page, perPage int) ([]models.SubTodo, error)
 	GetSubTodosByTitle(title string) ([]models.SubTodo, error)
 	GetSubTodosByDescription(description string) ([]models.SubTodo, error)
-	GetSubTodosByTitleAndDescription(title, description string) ([]models.SubTodo, error)
 	UpdateSubTodo(subtodo models.SubTodo) (models.SubTodo, error)
 	DeleteSubTodo(subtodo models.SubTodo, ID int) (models.SubTodo, error)
 }
@@ -41,6 +41,13 @@ func (r *repository) GetSubTodos() ([]models.SubTodo, error) {
 	return subtodos, err
 }
 
+func (r *repository) GetSubTodosByPagination(page, perPage int) ([]models.SubTodo, error) {
+	var subtodos []models.SubTodo
+	err := r.db.Offset((page - 1) * perPage).Limit(perPage).Find(&subtodos).Error
+
+	return subtodos, err
+}
+
 func (r *repository) GetSubTodosByTitle(title string) ([]models.SubTodo, error) {
 	var subtodos []models.SubTodo
 	err := r.db.Where("title ILIKE ?", "%"+title+"%").Find(&subtodos).Error
@@ -51,13 +58,6 @@ func (r *repository) GetSubTodosByTitle(title string) ([]models.SubTodo, error) 
 func (r *repository) GetSubTodosByDescription(description string) ([]models.SubTodo, error) {
 	var subtodos []models.SubTodo
 	err := r.db.Where("description ILIKE ?", "%"+description+"%").Find(&subtodos).Error
-
-	return subtodos, err
-}
-
-func (r *repository) GetSubTodosByTitleAndDescription(title, description string) ([]models.SubTodo, error) {
-	var subtodos []models.SubTodo
-	err := r.db.Where("title ILIKE ? OR description ILIKE ?", "%"+title+"%", "%"+description+"%").Find(&subtodos).Error
 
 	return subtodos, err
 }
