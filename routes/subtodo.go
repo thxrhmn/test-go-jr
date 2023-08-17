@@ -13,9 +13,9 @@ func SubTodoRoutes(e *echo.Group) {
 	subTodoRepository := repositories.RepositorySubTodo(postgresql.DB)
 	h := handlers.HandlerSubTodo(subTodoRepository)
 
-	e.POST("/subtodo", middleware.UploadFile(h.CreateSubTodo))
+	e.POST("/create/subtodo", middleware.UploadFile(h.CreateSubTodo))
 	e.GET("/subtodo/:id", h.GetSubTodo)
 	e.GET("/subtodos", h.GetSubTodos)
 	e.DELETE("/subtodo/:id", h.DeleteSubTodo)
-	e.PATCH("/subtodo/:id", middleware.UploadFile(h.UpdateSubTodo))
+	e.PATCH("/update/subtodo/:id", middleware.UploadFile(h.UpdateSubTodo))
 }
