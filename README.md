@@ -1,10 +1,21 @@
 ## TEST GO JR
 
 ### PREQUISITES:
-- go v.120 or latest
-- git / git bash (windows)
-- postgresql (pg admin)
+- Go v.120 or latest
+- Git / Git bash (windows)
+- PostgreSQL
 
+### FEATURES
+- Pagination
+- Filter by `title` and `description`
+- Swagger
+- Migration DB
+- And more
+
+### TECH & LIB
+- Go & Echo Framework
+- GORM
+- PostgreSQL
 
 ### HOW TO USE?
 ```
