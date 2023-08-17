@@ -2,6 +2,7 @@ package routes
 
 import (
 	"todo-list-thxrhmn/handlers"
+	"todo-list-thxrhmn/pkg/middleware"
 	"todo-list-thxrhmn/pkg/postgresql"
 	"todo-list-thxrhmn/repositories"
 
@@ -12,9 +13,9 @@ func SubTodoRoutes(e *echo.Group) {
 	subTodoRepository := repositories.RepositorySubTodo(postgresql.DB)
 	h := handlers.HandlerSubTodo(subTodoRepository)
 
-	e.POST("/subtodo", h.CreateSubTodo)
+	e.POST("/subtodo", middleware.UploadFile(h.CreateSubTodo))
 	e.GET("/subtodo/:id", h.GetSubTodo)
 	e.GET("/subtodos", h.GetSubTodos)
 	e.DELETE("/subtodo/:id", h.DeleteSubTodo)
-	e.PATCH("/subtodo/:id", h.UpdateSubTodo)
+	e.PATCH("/subtodo/:id", middleware.UploadFile(h.UpdateSubTodo))
 }
