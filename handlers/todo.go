@@ -26,17 +26,19 @@ func HandlerTodo(TodoRepository repositories.TodoRepository) *handlerTodo {
 // @Tags todo
 // @Param title formData string true "Title"
 // @Param description formData string true "Description"
-// @Param file formData string false "File"
+// @Param file formData file false "File" format(mime)
 // @Accept mpfd
 // @Produce json
 // @Success 200 {object} dto.SuccessResult
 // @Failure 500 {object} dto.ErrorResult
 // @Router /todo [post]
 func (h *handlerTodo) CreateTodo(c echo.Context) error {
+	dataFile := c.Get("dataFile").(string)
+
 	request := tododto.TodoRequest{
 		Title:       c.FormValue("title"),
 		Description: c.FormValue("description"),
-		File:        c.FormValue("file"),
+		File:        dataFile,
 	}
 
 	validation := validator.New()
@@ -128,19 +130,20 @@ func (h *handlerTodo) GetTodos(c echo.Context) error {
 // @Param id path int true "Id"
 // @Param title formData string true "Title"
 // @Param description formData string true "Description"
-// @Param file formData string false "File"
+// @Param file formData file false "File" format(mime)
 // @Accept mpfd
 // @Produce json
 // @Success 200 {object} dto.SuccessResult
 // @Failure 500 {object} dto.ErrorResult
 // @Router /todo/{id} [patch]
 func (h *handlerTodo) UpdateTodo(c echo.Context) error {
+	dataFile := c.Get("dataFile").(string)
 	id, _ := strconv.Atoi(c.Param("id"))
 
 	request := tododto.TodoRequest{
 		Title:       c.FormValue("title"),
 		Description: c.FormValue("description"),
-		File:        c.FormValue("file"),
+		File:        dataFile,
 	}
 
 	validation := validator.New()

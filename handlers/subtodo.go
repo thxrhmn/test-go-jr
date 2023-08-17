@@ -27,19 +27,20 @@ func HandlerSubTodo(SubTodoRepository repositories.SubTodoRepository) *handlerSu
 // @Param todo_id formData int true "TodoID"
 // @Param title formData string true "Title"
 // @Param description formData string true "Description"
-// @Param file formData string false "File"
+// @Param file formData file false "File" format(mime)
 // @Accept mpfd
 // @Produce json
 // @Success 200 {object} dto.SuccessResult
 // @Failure 500 {object} dto.ErrorResult
 // @Router /subtodo [post]
 func (h *handlerSubTodo) CreateSubTodo(c echo.Context) error {
+	dataFile := c.Get("dataFile").(string)
 	todoId, _ := strconv.Atoi(c.FormValue("todo_id"))
 
 	request := tododto.SubTodoRequest{
 		Title:       c.FormValue("title"),
 		Description: c.FormValue("description"),
-		File:        c.FormValue("file"),
+		File:        dataFile,
 		TodoID:      todoId,
 	}
 
@@ -133,19 +134,22 @@ func (h *handlerSubTodo) GetSubTodos(c echo.Context) error {
 // @Param id path int true "Id"
 // @Param title formData string true "Title"
 // @Param description formData string true "Description"
-// @Param file formData string false "File"
+// @Param todo_id formData int true "Todo Id"
+// @Param file formData file false "File" format(mime)
 // @Accept mpfd
 // @Produce json
 // @Success 200 {object} dto.SuccessResult
 // @Failure 500 {object} dto.ErrorResult
 // @Router /subtodo/{id} [patch]
 func (h *handlerSubTodo) UpdateSubTodo(c echo.Context) error {
-	todoId, _ := strconv.Atoi(c.Param("id"))
+	dataFile := c.Get("dataFile").(string)
+	subTodoId, _ := strconv.Atoi(c.Param("id"))
+	todoId, _ := strconv.Atoi(c.FormValue("todo_id"))
 
 	request := tododto.SubTodoRequest{
 		Title:       c.FormValue("title"),
 		Description: c.FormValue("description"),
-		File:        c.FormValue("file"),
+		File:        dataFile,
 		TodoID:      todoId,
 	}
 
@@ -155,7 +159,7 @@ func (h *handlerSubTodo) UpdateSubTodo(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, dto.ErrorResult{Status: http.StatusInternalServerError, Message: err.Error()})
 	}
 
-	subTodo, _ := h.SubTodoRepository.GetSubTodo(todoId)
+	subTodo, _ := h.SubTodoRepository.GetSubTodo(subTodoId)
 
 	if request.Title != "" {
 		subTodo.Title = request.Title
