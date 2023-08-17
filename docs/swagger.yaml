@@ -162,6 +162,14 @@ paths:
       - application/json
       description: Get all subtodo
       parameters:
+      - description: Search query by pagination
+        in: query
+        name: page
+        type: integer
+      - description: Search query by pagination
+        in: query
+        name: per_page
+        type: integer
       - description: Search query by title
         in: query
         name: search_query
@@ -311,6 +319,14 @@ paths:
       - application/json
       description: Get all todo
       parameters:
+      - description: Search query by pagination
+        in: query
+        name: page
+        type: integer
+      - description: Search query by pagination
+        in: query
+        name: per_page
+        type: integer
       - description: Search query by title
         in: query
         name: search_query

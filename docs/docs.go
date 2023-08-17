@@ -228,6 +228,18 @@ const docTemplate = `{
                 "summary": "Get all subtodo",
                 "parameters": [
                     {
+                        "type": "integer",
+                        "description": "Search query by pagination",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Search query by pagination",
+                        "name": "per_page",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "Search query by title",
                         "name": "search_query",
@@ -451,6 +463,18 @@ const docTemplate = `{
                 ],
                 "summary": "Get all todo",
                 "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Search query by pagination",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Search query by pagination",
+                        "name": "per_page",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "Search query by title",
