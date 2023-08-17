@@ -52,9 +52,10 @@ paths:
         required: true
         type: string
       - description: File
+        format: mime
         in: formData
         name: file
-        type: string
+        type: file
       produces:
       - application/json
       responses:
@@ -138,10 +139,16 @@ paths:
         name: description
         required: true
         type: string
+      - description: Todo Id
+        in: formData
+        name: todo_id
+        required: true
+        type: integer
       - description: File
+        format: mime
         in: formData
         name: file
-        type: string
+        type: file
       produces:
       - application/json
       responses:
@@ -172,7 +179,7 @@ paths:
         type: integer
       - description: Search query by title
         in: query
-        name: search_query
+        name: search_title
         type: string
       - description: Search query by description
         in: query
@@ -209,9 +216,10 @@ paths:
         required: true
         type: string
       - description: File
+        format: mime
         in: formData
         name: file
-        type: string
+        type: file
       produces:
       - application/json
       responses:
@@ -296,9 +304,10 @@ paths:
         required: true
         type: string
       - description: File
+        format: mime
         in: formData
         name: file
-        type: string
+        type: file
       produces:
       - application/json
       responses:
@@ -329,7 +338,7 @@ paths:
         type: integer
       - description: Search query by title
         in: query
-        name: search_query
+        name: search_title
         type: string
       - description: Search query by description
         in: query

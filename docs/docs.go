@@ -61,7 +61,8 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "string",
+                        "type": "file",
+                        "format": "mime",
                         "description": "File",
                         "name": "file",
                         "in": "formData"
@@ -191,7 +192,15 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "string",
+                        "type": "integer",
+                        "description": "Todo Id",
+                        "name": "todo_id",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "format": "mime",
                         "description": "File",
                         "name": "file",
                         "in": "formData"
@@ -242,7 +251,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Search query by title",
-                        "name": "search_query",
+                        "name": "search_title",
                         "in": "query"
                     },
                     {
@@ -297,7 +306,8 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "string",
+                        "type": "file",
+                        "format": "mime",
                         "description": "File",
                         "name": "file",
                         "in": "formData"
@@ -427,7 +437,8 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "string",
+                        "type": "file",
+                        "format": "mime",
                         "description": "File",
                         "name": "file",
                         "in": "formData"
@@ -478,7 +489,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Search query by title",
-                        "name": "search_query",
+                        "name": "search_title",
                         "in": "query"
                     },
                     {

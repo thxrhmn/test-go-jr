@@ -54,7 +54,8 @@
                         "required": true
                     },
                     {
-                        "type": "string",
+                        "type": "file",
+                        "format": "mime",
                         "description": "File",
                         "name": "file",
                         "in": "formData"
@@ -184,7 +185,15 @@
                         "required": true
                     },
                     {
-                        "type": "string",
+                        "type": "integer",
+                        "description": "Todo Id",
+                        "name": "todo_id",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "format": "mime",
                         "description": "File",
                         "name": "file",
                         "in": "formData"
@@ -235,7 +244,7 @@
                     {
                         "type": "string",
                         "description": "Search query by title",
-                        "name": "search_query",
+                        "name": "search_title",
                         "in": "query"
                     },
                     {
@@ -290,7 +299,8 @@
                         "required": true
                     },
                     {
-                        "type": "string",
+                        "type": "file",
+                        "format": "mime",
                         "description": "File",
                         "name": "file",
                         "in": "formData"
@@ -420,7 +430,8 @@
                         "required": true
                     },
                     {
-                        "type": "string",
+                        "type": "file",
+                        "format": "mime",
                         "description": "File",
                         "name": "file",
                         "in": "formData"
@@ -471,7 +482,7 @@
                     {
                         "type": "string",
                         "description": "Search query by title",
-                        "name": "search_query",
+                        "name": "search_title",
                         "in": "query"
                     },
                     {
