@@ -1,12 +1,13 @@
 ## TEST GO JR
 
-### PREQUISITES:
+### PREQUISITES
 - Go v.120 or latest
 - Git / Git bash (windows)
 - PostgreSQL
 
 ### FEATURES
 - Pagination
+- Upload file only `.txt` and `.pdf` files allowed
 - Filter by `title` and `description`
 - Swagger
 - Migration DB
@@ -57,6 +58,6 @@ you can test all enpoints using swagger
 ![The San Juan Mountains are beautiful!](swagger.png)
 
 ### POSTMAN COLLECTION
-or you can use my postman collection https://www.postman.com/docking-module-geologist-95497667/workspace/thxrhmn/collection/26563934-d1466f86-f29e-4729-8f53-647e6128f234?action=share&creator=26563934
+or you can use my postman collection https://www.postman.com/docking-module-geologist-95497667/workspace/thxrhmn/collection/26563934-734ad859-4500-4ec5-a328-4a3740ed0f94?action=share&creator=26563934
 
 ![The San Juan Mountains are beautiful!](postman.png)
